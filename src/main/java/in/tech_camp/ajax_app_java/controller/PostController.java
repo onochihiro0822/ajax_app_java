@@ -21,12 +21,8 @@ public class PostController {
   public String showList(Model model) {
     var postList = postRepository.findAll();
     model.addAttribute("postList", postList);
+    model.addAttribute("postForm", new PostForm());
     return "posts/index";
-  }
-
-  @GetMapping("/postForm")
-  public String showPostForm(@ModelAttribute("postForm") PostForm form){
-      return "posts/postForm";
   }
 
   @PostMapping("/posts")
