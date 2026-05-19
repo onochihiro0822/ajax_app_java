@@ -9,7 +9,7 @@
 <body>
   <h1>AjaxApp</h1>
   
-  <form th:action="@{/posts}" method="post" th:object="${postForm}" id="form">
+  <form th:action="@{/posts}" method="post" th:object="${postForm}" id="form"><!--{/posts}がコントローラーにある-->
     <input type="text" th:field="*{content}"/>
     <input type="submit" value="投稿する" id="submit"/>
   </form>
