@@ -26,13 +26,13 @@ public class PostController {
     return "posts/index";
   }
 
-  @PostMapping("/posts")
+  @PostMapping("/posts")//indexとつながってる。ルーティング
   public ResponseEntity<PostEntity> savePost(@ModelAttribute("postForm") PostForm form){//フォームの値を入れる
     PostEntity post = new PostEntity();
     post.setContent(form.getContent());//フォームの値を受け取る
     postRepository.insert(post);
     PostEntity resultPost = postRepository.findById(post.getId());
-    return ResponseEntity.ok(resultPost);//jsonで返す
+    return ResponseEntity.ok(resultPost);//jsonで、jsのXHR.responseに返す
   }
   
 }
