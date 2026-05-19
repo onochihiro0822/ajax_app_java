@@ -1,5 +1,6 @@
 package in.tech_camp.ajax_app_java.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,20 +22,17 @@ public class PostController {
   public String showList(Model model) {
     var postList = postRepository.findAll();
     model.addAttribute("postList", postList);
+    model.addAttribute("postForm", new PostForm());
     return "posts/index";
   }
 
-  @GetMapping("/postForm")
-  public String showPostForm(@ModelAttribute("postForm") PostForm form){
-      return "posts/postForm";
-  }
-
-  @PostMapping("/posts")
-  public String savePost(@ModelAttribute("postForm") PostForm form){
+  @PostMapping("/posts")//indexとつながってる。ルーティング
+  public ResponseEntity<PostEntity> savePost(@ModelAttribute("postForm") PostForm form){//フォームの値を入れる
     PostEntity post = new PostEntity();
-    post.setContent(form.getContent());
+    post.setContent(form.getContent());//フォームの値を受け取る
     postRepository.insert(post);
-    return "redirect:/";
+    PostEntity resultPost = postRepository.findById(post.getId());
+    return ResponseEntity.ok(resultPost);//jsonで、jsのXHR.responseに返す
   }
   
 }
